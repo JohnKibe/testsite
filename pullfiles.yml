@@ -1,0 +1,14 @@
+---
+
+- hosts: pg
+  become: true
+  tasks:
+    - name: Fetch stuff from pg and save to local
+      become: yes
+      synchronize:  
+        src: "{{ item.source }}"
+        dest: "{{ item.dest }}"
+        mode: pull
+      with_items:
+        - { source: '/var/log/applications/EQUITELAdaptor/Databases/2019-08-07', dest: '/mnt/c/Users/jkibet/Music/test3/Database' }
+        - { source: '/var/log/applications/EQUITELAdaptor/Exceptions/2019-08-07', dest: '/mnt/c/Users/jkibet/Music/test3/Exceptions' }

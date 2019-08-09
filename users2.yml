@@ -1,0 +1,43 @@
+---
+- hosts: "test-servers"
+  # connection: "ssh"
+  become: true
+  vars:
+    users:
+    - "jkibet"
+  tasks:
+  - name: "Create user accounts"
+    remote_user: ekenya
+    become: yes
+    become_method: sudo
+    user:
+      name: "{{ item }}"
+      groups: "wheel"
+    with_items: "{{ users }}"
+  
+  - name: "Add authorized keys"
+    remote_user: ekenya
+    become: yes
+    become_method: sudo
+    authorized_key:
+      user: "{{ item }}"
+      key: "{{ lookup('file', '/home/tech/.ssh/id_rsa.pub') }}"
+     # key: "{{ lookup('file', 'files/'+ item + '.key.pub') }}"
+    with_items: "{{ users }}"
+     #  - name: "Allow wheel users to sudo without a password"
+    #lineinfile:
+    # dest: "/etc/sudoers" # path: in version 2.3
+    #  state: "present"
+    #  regexp: "^jkibet"
+    #  line: "jkibet ALL=(ALL) NOPASSWD: ALL"
+  - name: Add user "jkibet" to sudo
+    remote_user: ekenya
+    become: yes
+    become_method: sudo
+    lineinfile:
+      path: /etc/sudoers.d/jkibet
+      line: 'jkibet ALL=(ALL) NOPASSWD: ALL'
+      state: present
+      mode: 0440
+      create: yes
+      validate: 'visudo -cf %s'

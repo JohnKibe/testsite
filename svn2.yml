@@ -1,0 +1,18 @@
+---
+- hosts: 127.0.0.1
+  tasks:
+   - name: Checkout subversion repository to specified folder
+     subversion:
+       repo: https://svn.ekenya.co.ke/svn/KENYA/Swivel_Ecommerce/frontend/content/dist
+       username: jkibet
+       password: pepe12345??!!
+       checkout: yes
+       update: yes
+       in_place: yes
+       dest: /mnt/c/Users/jkibet/Music/test2/
+
+- hosts: worker1
+  tasks:
+    - synchronize:
+        src: /mnt/c/Users/jkibet/Music/test2/
+        dest: /var/log/test2/
