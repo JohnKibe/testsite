@@ -1,0 +1,52 @@
+---
+
+- hosts: 127.0.0.1
+  #become: true
+
+  vars_files:
+    - ./variables1/vars.yaml
+  tasks:
+
+    - name: Auto-Create Local parent project directory {{ LOCAL_PROJECT_DIRECTORY }} and sub-directories
+      file: path={{ LOCAL_PROJECT_DIRECTORY }}/{{ item }} state=directory
+      with_items:
+          - Application
+          - BillPresentment
+          - Data
+          - Database
+          - FromAPI
+          - Others
+          - PresentmentsExeptions
+          - ToAPI
+          - QueryStatus
+          - ReadMsgQueue
+          - Syncronous
+          - Validation
+      
+- hosts: pgapi
+
+  vars_files:
+    - ./variables1/vars.yaml
+  become: true
+
+  tasks:
+
+    - name: Fetch stuff from your remote server and save to locally autocreated direcotries
+      become: yes
+      synchronize:  
+        src: "{{ REMOTE_PROJECT_DIRECTORY }}/{{ item }}/2019-08-09"
+        dest: "{{ LOCAL_PROJECT_DIRECTORY }}/{{ item }}"
+        mode: pull
+      with_items:
+          - Application
+          - BillPresentment
+          - Data
+          - Database
+          - FromAPI
+          - Others
+          - PresentmentsExeptions
+          - ToAPI
+          - QueryStatus
+          - ReadMsgQueue
+          - Syncronous
+          - Validation
