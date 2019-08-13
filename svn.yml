@@ -3,7 +3,7 @@
   tasks:
    - name: Checkout subversion repository to specified folder
      subversion:
-       repo: https://svn.ekenya.co.ke/svn/KENYA/Swivel_Ecommerce/frontend/content/dist
+       repo: https://
        username: jkibet
        password:
        checkout: yes
