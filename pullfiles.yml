@@ -1,6 +1,6 @@
 ---
 
-- hosts: pg
+- hosts: host1
   become: true
   tasks:
     - name: Fetch stuff from pg and save to local
