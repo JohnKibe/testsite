@@ -7,7 +7,7 @@
     - "jkibet"
   tasks:
   - name: "Create user accounts"
-    remote_user: ekenya
+    remote_user: tech2
     become: yes
     become_method: sudo
     user:
@@ -16,7 +16,7 @@
     with_items: "{{ users }}"
   
   - name: "Add authorized keys"
-    remote_user: ekenya
+    remote_user: tech2
     become: yes
     become_method: sudo
     authorized_key:
@@ -31,7 +31,7 @@
     #  regexp: "^jkibet"
     #  line: "jkibet ALL=(ALL) NOPASSWD: ALL"
   - name: Add user "jkibet" to sudo
-    remote_user: ekenya
+    remote_user: tech2
     become: yes
     become_method: sudo
     lineinfile:
